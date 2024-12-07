@@ -1,0 +1,52 @@
+/* PALLETTE */
+:root {
+    --white: #fff;
+    --black: #000;
+    --red: #F26419;
+    --yellow: #F6AE2D;
+    --green: #758E4F;
+    --blue: #33658A;
+    --btn: #ff8500;
+    --hovered: #ff7900;
+}
+
+body {
+    margin: 0 auto;
+    max-width: 50%;
+}
+
+.container {
+    border: 2px solid green;
+    text-align: center;
+}
+
+.game-board {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2%;
+}
+
+#start-game-btn {
+    padding: 2%;
+    font-size: 120%;
+    border: 0;
+    border-radius: 10px;
+    margin: 1%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    color: var(--white);
+    background-color: var(--btn);
+    transition: 0.3s;
+}
+
+#start-game-btn:hover {
+    border-radius: 15px;
+    box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
+    background-color: var(--hovered);
+}
+
+.ball-styled {
+    background-color: var(--black);
+    width: 1vw;
+    height: 2vh;
+    border-radius: 50%;
+}
