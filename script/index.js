@@ -57,24 +57,61 @@ function choosed(color) {
 
 function checkUserSequence(userSequence) {
     console.log(userSequence);
-    let hintBtn = document.getElementById(`${r1}-${n1}-hint`)
 
-    // controllo se esiste il colore nella sequenza generata
-    for (let j = 0; j < userSequence.length; j++) {
-        n1++;
-        console.log(n1);
-        if (sequence.indexOf(userSequence[j]) != -1) {
-            // vuol dire che c'è
-            console.log('c');
-            hintBtn.id = 'white';
-            
-            // se uno è nella posizione esatta 
-            if (userSequence[j] === sequence[j]) {
-                console.log('uguale');
-                hintBtn.id = 'black';
-            }
-        } else {
-            console.log('nc');
+    // Raccolgo tutti i hint button per la riga corrente
+    let hintBtns = [];
+    for (let j = 0; j < 4; j++) {
+        let hintBtn = document.getElementById(`${r1}-${n1 + j}-hint`);
+        if (!hintBtn) {
+            console.error(`Hint button ${r1}-${n1 + j}-hint not found`);
+            return; // Esco dalla funzione se un bottone non è trovato
+        }
+        hintBtns.push(hintBtn);
+    }
+
+    let sequenceCopy = [...sequence];
+    let userCopy = [...userSequence];
+
+    // Prima passata: controllo esatti
+    for (let j = 0; j < 4; j++) {
+        if (userSequence[j] === sequence[j]) {
+            hintBtns[j].id = 'black';
+            sequenceCopy[j] = null;
+            userCopy[j] = null;
         }
     }
+
+    // Seconda passata: controllo presenti ma in posizione errata
+    for (let j = 0; j < 4; j++) {
+        if (userCopy[j] !== null) {
+            let index = sequenceCopy.indexOf(userCopy[j]);
+            if (index !== -1) {
+                hintBtns[j].id = 'white';
+                sequenceCopy[index] = null;
+            }
+        }
+    }
+
+    // Controllo vittoria: confronto diretto con le sequenze
+    let isCorrect = true;
+    for (let i = 0; i < 4; i++) {
+        if (userSequence[i] !== sequence[i]) {
+            isCorrect = false;
+            break;
+        }
+    }
+
+    if (isCorrect) {
+        alert('Hai vinto!');
+        return;
+    }
+
+    // Controllo sconfitta
+    if (r1 === 10 && n1 === 37) { // Ultima riga (r1 === 10) e ultima colonna (n1 === 37, cioè 4 hint già verificati)
+        alert(`Hai perso! La sequenza da indovinare era: ${sequence.join(", ")}`);
+        return;
+    }
+
+    // Avanzo al prossimo set di hint
+    n1 += 4;
 }
